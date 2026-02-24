@@ -13,10 +13,13 @@ import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 
+const github_path_prefix = "/blog"
+
 pub fn main() {
   let md =
     markdown.default()
     |> markdown.markdown_path("./blog")
+    |> markdown.route_prefix("articles")
     |> markdown.template(article_template)
 
   let cfg =
@@ -35,9 +38,12 @@ fn home_view(posts: List(Post(Nil))) -> Element(Nil) {
     |> list.map(fn(p) {
       html.li([attribute.class("text-xl text-left proportional-nums")], [
         html.text(timestamp_to_short_string(p.date) <> " : "),
-        html.a([attribute.href(p.slug), attribute.class("link")], [
-          element.text(p.title),
-        ]),
+        html.a(
+          [attribute.href(abs("/articles/") <> p.slug), attribute.class("link")],
+          [
+            element.text(p.title),
+          ],
+        ),
       ])
     })
 
@@ -89,7 +95,7 @@ fn body_template(
       ]),
       html.link([
         attribute.rel("stylesheet"),
-        attribute.href("css/style.css"),
+        attribute.href(abs("/css/style.css")),
       ]),
     ]),
     html.body([attribute.class("mx-auto")], [
@@ -101,7 +107,7 @@ fn body_template(
             ),
           ],
           [
-            html.a([attribute.href("../"), attribute.class("link")], [
+            html.a([attribute.href(abs("/")), attribute.class("link")], [
               element.text("← Home"),
             ]),
             html.a(
@@ -196,4 +202,8 @@ fn timestamp_to_short_string(ts: timestamp.Timestamp) -> String {
   let day = int.to_string(date.day) |> string.pad_start(2, "0")
   let year = int.to_string(date.year) |> string.drop_start(2)
   month <> "/" <> day <> "/" <> year
+}
+
+fn abs(path: String) -> String {
+  github_path_prefix <> path
 }
