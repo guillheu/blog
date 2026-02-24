@@ -103,7 +103,7 @@ fn body_template(
         html.nav(
           [
             attribute.class(
-              "flex navbar bg-base-200 justify-center text-xl gap-6",
+              "flex navbar bg-base-200 justify-center text-xl gap-6 pl-4 pr-4",
             ),
           ],
           [
@@ -132,13 +132,13 @@ fn body_template(
         ),
       ]),
       html.main(
-        [attribute.class("text-center max-w-[600px] mx-auto pt-6")],
+        [attribute.class("text-center max-w-[600px] mx-auto pt-6 pl-4 pr-4")],
         contents,
       ),
       html.footer(
         [
           attribute.class(
-            "footer bg-base-200 footer-center fixed bottom-0 left-0 right-0",
+            "footer bg-base-200 footer-center fixed bottom-0 left-0 right-0 pl-4 pr-4",
           ),
         ],
         [
