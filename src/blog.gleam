@@ -36,7 +36,7 @@ fn home_view(posts: List(Post(Nil))) -> Element(Nil) {
     |> list.map(fn(p) {
       html.li([attribute.class("text-xl text-left proportional-nums")], [
         html.text(timestamp_to_short_string(p.date) <> " : "),
-        html.a([attribute.href("/blog/" <> p.slug), attribute.class("link")], [
+        html.a([attribute.href("blog/" <> p.slug), attribute.class("link")], [
           element.text(p.title),
         ]),
       ])
@@ -102,7 +102,7 @@ fn body_template(
             ),
           ],
           [
-            html.a([attribute.href("/"), attribute.class("link")], [
+            html.a([attribute.href("../"), attribute.class("link")], [
               element.text("← Home"),
             ]),
             html.a(
