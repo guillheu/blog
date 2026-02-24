@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: gleam deps download
       - name: Run tailwindcss
-        run: tailwindcss -i tailwind/input.css so static/css/style.css
+        run: tailwindcss -i tailwind/input.css -o static/css/style.css
       - name: Build HTML
         run: gleam run
       - name: Setup Pages
