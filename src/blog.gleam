@@ -13,7 +13,7 @@ import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 
-const github_path_prefix = "/blog"
+const github_path_prefix = ""
 
 pub fn main() {
   let md =
