@@ -90,7 +90,7 @@ fn body_template(
       ]),
       html.link([
         attribute.rel("stylesheet"),
-        attribute.href("/css/style.css"),
+        attribute.href("css/style.css"),
       ]),
     ]),
     html.body([attribute.class("mx-auto")], [
