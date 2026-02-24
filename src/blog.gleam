@@ -17,7 +17,6 @@ pub fn main() {
   let md =
     markdown.default()
     |> markdown.markdown_path("./blog")
-    |> markdown.route_prefix("blog")
     |> markdown.template(article_template)
 
   let cfg =
@@ -36,7 +35,7 @@ fn home_view(posts: List(Post(Nil))) -> Element(Nil) {
     |> list.map(fn(p) {
       html.li([attribute.class("text-xl text-left proportional-nums")], [
         html.text(timestamp_to_short_string(p.date) <> " : "),
-        html.a([attribute.href("blog/" <> p.slug), attribute.class("link")], [
+        html.a([attribute.href(p.slug), attribute.class("link")], [
           element.text(p.title),
         ]),
       ])
