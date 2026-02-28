@@ -1,7 +1,7 @@
 ---
 title: Gaining Lustre
 date: 2026-02-28 13:28:00
-description: It's time to shine
+description: Diving into Lustre's server components
 slug: gaining-lustre
 ---
 

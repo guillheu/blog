@@ -55,13 +55,19 @@ fn home_view(posts: List(Post(Nil))) -> Element(Nil) {
     list.sort(posts, fn(a, b) { timestamp.compare(b.date, a.date) })
     |> list.map(fn(p) {
       html.li([attribute.class("text-xl text-left proportional-nums")], [
-        html.text(timestamp_to_short_string(p.date) <> " : "),
-        html.a(
-          [attribute.href(abs("/articles/") <> p.slug), attribute.class("link")],
-          [
-            element.text(p.title),
-          ],
-        ),
+        html.p([], [
+          html.text(timestamp_to_short_string(p.date) <> " : "),
+          html.a(
+            [
+              attribute.href(abs("/articles/") <> p.slug),
+              attribute.class("link"),
+            ],
+            [
+              element.text(p.title),
+            ],
+          ),
+          html.text(" - " <> p.description),
+        ]),
       ])
     })
 
@@ -72,10 +78,8 @@ fn home_view(posts: List(Post(Nil))) -> Element(Nil) {
       ]),
       html.p([attribute.class("pt-3 pb-6")], [
         html.text(
-          "I'm a CompSci major and I do a bunch of stuff related to computers. Frequent interestests include Gleam, DevOps stuff, Nix, declarative anything",
+          "I'm a CompSci major and I do a bunch of stuff related to computers. Frequent interestests include Gleam, DevOps stuff, Nix, declarative anything and really ugly websites (as is painfully visible)",
         ),
-        html.br([]),
-        html.text("and really ugly websites (as is painfully visible)"),
         html.br([]),
         html.text(
           "I'll be posting techy stuff here. You can browse some articles:",
