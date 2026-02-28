@@ -7,13 +7,13 @@ slug: gaining-lustre
 
 # I have a Dream...
 
-There are so many projects I want to make, some of which absolutely require some kind of server-side... stuff.
+There are so many websites I want to make, some of which absolutely require some kind of server-side... stuff.
 
 So far I've only used Lustre for SPAs and static sites, but it's time to level up.
 
 ## The goal
 
-The goal of this article is to write a reference I can go back to in the future to quickly and easily convert/create a full stack Lustre project.
+The goal of this article is to write a reference I can go back to in the future to quickly and easily convert/create Lustre project using server components.
 
 The code snippets here are heavily inspired by [the Lustre server component basic setup example](https://github.com/lustre-labs/lustre/blob/main/examples/06-server-components/01-basic-setup/src/app.gleam).
 
@@ -21,9 +21,9 @@ We assume that we already have a fully working Lustre application, with its own 
 
 ## Getting into it
 
-So the first thing I understand is that a `component` is essentially a sub-application within a Lustre application. Client-side only, maybe it's useful to re-use a project within different pages... not really what I'm looking for, but what *is* interesting is `server_component`s. They're the same idea, except the component is fully rendered on the server.
+The first thing I understand is that a `component` is essentially a sub-application within a Lustre application. Client-side only, maybe it's useful to re-use a project within different pages... not really what I'm looking for, but what *is* interesting is `server_component`s. They're the same idea, except the component is fully rendered on the server.
 
-The updates will all be sent over a WebSocket connection, which means the server needs to be configured to not only accept this WS connection but correctly configure it to serve the Lustre updates and stuff...
+The updates will all be sent over a WebSocket connection, which means the server needs to be configured to not only accept this WS connection but correctly configure the WebSocket endpoint to serve the Lustre updates and stuff (which I like to call ✨ Magic Lustre Goo ✨)
 
 The client must be given a special lustre runtime via the `<lustre-server-component />` tag which will point to the server's WebSocket.
 
@@ -41,7 +41,7 @@ For the needs of a server component, the `init` function needs the following ste
 - start the component with `lustre.start_server_component` (that will create an actor for the component)
 - create a self-subject to recieve messages from the lustre component actor we created in the previous step
 - register the self-subject to the component, and send that self-registration back to the component to ensure 2-way communication between the lustre component and the mist WebSocket handler
-- return a tuple with the component `state` that will be maintained throughout the WebSocket connection, and a selector to the self-subject for the `mist` actor (not 100% sure what it's for, but it's there!). In our case, the state should contain a reference to the component and the self-subject. 
+- return a tuple with the component `state` that will be maintained throughout the WebSocket connection, and a selector to the self-subject for the `mist` actor (not 100% sure what it's for, but it's there!). In our case, the state should contain a reference to the component and the self-subject (although I'm not actually sure what we need that `state.self`, I'll be trying without it see if it works). 
 
 Minimal code would look something like this:
 
@@ -78,7 +78,7 @@ fn init(_) -> #(
 The point of the `loop` is straight-forward: determine what to do whenever we recieve a websocket message, whether from the client, or from the server.
 
 The message is a `mist.WebsocketMessage(server_component.ClientMessage(my_component.Msg))`, which is a bit of a mouthful. Let's take it apart:
-- `mist.WebSocketMessage` -> That's the lowest level of WebSocket message, the raw message that doesn't even know we're doing anything Lustre related. Those can either be `mist.Text`, `mist.Binary`, `mist.Custom` (for server-to-client communications), `mist.Closed` or `mist.Shutdown`. The inner type defines what message would be sent for the `mist.Custom` message from the server to the client.
+- `mist.WebSocketMessage` -> That's the lowest level of WebSocket message, the raw message sent by `mist` that doesn't even know we're doing anything Lustre related. Those can either be `mist.Text`, `mist.Binary`, `mist.Custom` (for server-to-client communications), `mist.Closed` or `mist.Shutdown`. The inner type defines the `mist.Custom` message from the server to the client.
 - `server_component.ClientMessage` -> Only relevant for server-to-client communication, this is Lustre doing its thing. This is how we embed the messages that will be sent back to the client-side of the component
 - `my_component.Msg` -> Finally, the actual message of our component app. We got there.
 
@@ -149,7 +149,7 @@ fn serve_websocket(request: request.Request(mist.Connection))
 }
 ```
 
-With this, the `<lustre-server-component/>` element on the client will be able to get all the updates it needs from the server component...
+With this, the `<lustre-server-component/>` element on the client will be able to get all the updates it needs from the server...
 
 ... except, the client still needs the server component runtime
 
@@ -218,7 +218,7 @@ fn serve_html() -> Response(ResponseData) {
 As you can see we're:
 - creating an HTML page using lustre (which contains the oh-so-important `server_component.element` with a `server_component.route("/ws")`, pointing to our websocket endpoint that we'll be creating in a minute)
 - rendering it with `element.to_document_string_tree`
-- including it in a `Response` which will be sent back by `mist`.
+- including it in a `Response` which will be sent back to the user by `mist`.
 
 You'll notice that we're manually creating the `meta`, `title` and `script` tags, as well as styling. For larger projects, it's probably best to have a separate Lustre project for the client application, render it with `element.to_document_string`, save it to an HTML file and then just serve that HTML file statically. That lets you take advantage of the [Lustre TOML options to set all those tags and stuff on the client](https://hexdocs.pm/lustre_dev_tools/toml-reference.html), as well as tailwind styling and all that good stuff (:
 
@@ -237,7 +237,7 @@ pub fn main() {
       case request.path_segments(request) {
         [] -> serve_html()
         ["lustre", "runtime.mjs"] -> serve_runtime()
-        ["ws"] -> serve_component(request)
+        ["ws"] -> serve_websocket(request)
         _ -> response.set_body(response.new(404), mist.Bytes(bytes_tree.new()))
       }
     }
