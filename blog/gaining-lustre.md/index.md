@@ -1,6 +1,6 @@
 ---
 title: Gaining Lustre
-date: 2026-02-28 13:28:00
+date: 2026-02-28 14:03:00
 description: Diving into Lustre's server components
 slug: gaining-lustre
 ---

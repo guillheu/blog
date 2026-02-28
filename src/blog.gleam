@@ -186,6 +186,10 @@ fn body_template(
 }
 
 fn article_template(p: Post(Nil)) -> Element(Nil) {
+  let time_string =
+    timestamp.to_rfc3339(p.date, duration.seconds(0)) |> string.slice(11, 5)
+  // -> "1970-01-01T00:16:40.123Z"
+
   let article =
     html.article([attribute.class("mx-auto")], [
       html.h1(
@@ -199,7 +203,7 @@ fn article_template(p: Post(Nil)) -> Element(Nil) {
       html.p([attribute.class("prose prose-lg mx-auto pb-6")], [
         html.em([], [element.text(p.description)]),
         html.br([]),
-        html.text(timestamp_to_string(p.date)),
+        html.text(timestamp_to_string(p.date) <> " - " <> time_string),
       ]),
       html.div([attribute.class("prose text-left max-w-none")], p.contents),
     ])
