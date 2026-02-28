@@ -10,9 +10,71 @@
 
 /* Optional for custom themes – Docs: https://daisyui.com/docs/themes/#how-to-add-a-new-custom-theme */
 @plugin "./daisyui-theme.mjs"{
-  /* custom theme here */
+  name: "retro";
+  default: true;
+  --color-neutral: #1e1e1e;
+}
+
+/* pre code {
+  line-height: 1.4 !important;
+} */
+
+pre {
+  line-height: 1.4;
+}
+
+pre code {
+  font-family: 'Cascadia Code', monospace;
+  font-size: 1em;
+  line-height: 1.4;
 }
 
 body {
   font-family: sans-serif;
+}
+
+.hl-keyword {
+  color: #cf8e6d;
+}
+
+/* Strings */
+.hl-string {
+  color: #6aab73;
+}
+
+/* Numbers */
+.hl-number {
+  color: #2aacb8;
+}
+
+/* Type names and variants: Post, Nil, Element, String, Timestamp */
+.hl-variant {
+  color: #4ec9b0;
+}
+
+/* Function names */
+.hl-function {
+  color: #dcdcaa;
+}
+
+/* Module names before the dot: html, attribute, timestamp, int, string */
+.hl-module {
+  color: #4ec9b0;
+}
+
+/* Operators: ->, <>, |>, = */
+.hl-operator {
+  color: #d4d4d4;
+}
+
+/* Comments */
+.hl-comment {
+  color: #7a7a7a;
+  font-style: italic;
+}
+
+/* Whitespace and anything else — no styling needed */
+.hl-whitespace,
+.hl-other {
+  color: #d4d4d4;
 }

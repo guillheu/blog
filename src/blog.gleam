@@ -2,9 +2,10 @@ import blogatto
 import blogatto/config
 import blogatto/config/markdown
 import blogatto/post.{type Post}
+import contour
 import gleam/int
 import gleam/list
-import gleam/option
+import gleam/option.{None, Some}
 import gleam/string
 import gleam/time/calendar
 import gleam/time/duration
@@ -21,6 +22,23 @@ pub fn main() {
     |> markdown.markdown_path("./blog")
     |> markdown.route_prefix("articles")
     |> markdown.template(article_template)
+    |> markdown.code(fn(lang, children) {
+      case lang {
+        Some("gleam") -> {
+          let code_text = case children {
+            [element] -> element.to_string(element)
+            _ ->
+              panic as "Code blocks should only have one element (what the heck!)"
+          }
+          let stylized_html =
+            contour.to_html(code_text)
+            |> string.replace("&amp;gt;", ">")
+            |> string.replace("&amp;quot;", "\"")
+          element.unsafe_raw_html("", "code", [], stylized_html)
+        }
+        Some(_unknown_lang) | None -> html.code([], children)
+      }
+    })
 
   let cfg =
     config.new("https://blog.guillheu.dev")
@@ -132,7 +150,11 @@ fn body_template(
         ),
       ]),
       html.main(
-        [attribute.class("text-center max-w-[600px] mx-auto pt-6 pl-4 pr-4")],
+        [
+          attribute.class(
+            "text-center max-w-[800px] mx-auto pt-6 pl-4 pr-4 pb-12",
+          ),
+        ],
         contents,
       ),
       html.footer(
@@ -175,7 +197,7 @@ fn article_template(p: Post(Nil)) -> Element(Nil) {
         html.br([]),
         html.text(timestamp_to_string(p.date)),
       ]),
-      html.div([attribute.class("prose text-left")], p.contents),
+      html.div([attribute.class("prose text-left max-w-none")], p.contents),
     ])
 
   body_template([article], p.title, p.description, p.language)
