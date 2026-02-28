@@ -253,3 +253,9 @@ pub fn main() {
 With this, our `mist` server is listening in on `http://localhost:1234` and is serving the HTML on `/`, the WebSocket on `/ws` and the runtime on `/lustre/runtime.mjs`.
 
 With that, we *should* have a working server component!
+
+## Confession & Disclaimer
+
+At the time of writing, I haven't *actually* gone through all my own explanations to make sure what I'm saying is correct. This is simply my understanding of how server components work by taking apart [the official basic setup example](https://github.com/lustre-labs/lustre/tree/main/examples/06-server-components/01-basic-setup). I'll be actually following this article later and update it in case I messed up anywhere.
+
+In the meantime, I'm really hungry (check the time of this article, I haven't had lunch yet).
