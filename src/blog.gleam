@@ -33,6 +33,7 @@ pub fn main() {
           let stylized_html =
             contour.to_html(code_text)
             |> string.replace("&amp;gt;", ">")
+            |> string.replace("&amp;lt;", "<")
             |> string.replace("&amp;quot;", "\"")
           element.unsafe_raw_html("", "code", [], stylized_html)
         }
