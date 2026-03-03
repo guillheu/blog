@@ -206,18 +206,18 @@ This is the part I'm excited for, the `edge.linear()`. It returns an `attribute`
 
 Ok so trying to summarize everything we've seen. To use Clique we must:
 - Define our Model
-    - Define our own `Node` structure
-        - Each `Node` must have a unique `String` id
-        - Each node must have any number of `Handle`s that `Edge`s will bind to
-    - Define `Bounds` (viewport)
-    - Define a `Transform` (camera)
+- Define our own `Node` structure
+- Each `Node` must have a unique `String` id
+- Each node must have any number of `Handle`s that `Edge`s will bind to
+- Define `Bounds` (viewport)
+- Define a `Transform` (camera)
 - Draw the graph
-    - Use `clique.root` for the viewport
-    - Use `clique.background` to set the... background
-    - Use `clique.nodes` to create keyed elements (not strictly necessary, just better performance)
-        - Create each node element with `clique.node`, giving it a unique ID AND including the `Handle`s as children with `clique.handle`
-    - Use `clique.edges` to create keyed elements (not strictly necessary)
-        - Create each edge element with `clique.edge`, defining how to draw the edge with (for instance) `edge.linear()`
+- Use `clique.root` for the viewport
+- Use `clique.background` to set the... background
+- Use `clique.nodes` to create keyed elements (not strictly necessary, just better performance)
+- Create each node element with `clique.node`, giving it a unique ID AND including the `Handle`s as children with `clique.handle`
+- Use `clique.edges` to create keyed elements (not strictly necessary)
+- Create each edge element with `clique.edge`, defining how to draw the edge with (for instance) `edge.linear()`
 
 ## And yet, we're not even close to done
 
