@@ -1,6 +1,6 @@
 ---
 title: Part of the Clique
-date: 2026-03-03 10:12:00
+date: 2026-03-03 11:38:00
 description: Discovering the Clique library to draw graphs in Lustre
 slug: part-of-the-clique
 ---
@@ -218,3 +218,7 @@ Ok so trying to summarize everything we've seen. To use Clique we must:
         - Create each node element with `clique.node`, giving it a unique ID AND including the `Handle`s as children with `clique.handle`
     - Use `clique.edges` to create keyed elements (not strictly necessary)
         - Create each edge element with `clique.edge`, defining how to draw the edge with (for instance) `edge.linear()`
+
+## And yet, we're not even close to done
+
+I haven't even *looked* at the `update` function. My assumption is that for now this would work for a very boring static graph, and I can add interactivity as I move forward.
