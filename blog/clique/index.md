@@ -222,3 +222,20 @@ Ok so trying to summarize everything we've seen. To use Clique we must:
 ## And yet, we're not even close to done
 
 I haven't even *looked* at the `update` function. My assumption is that for now this would work for a very boring static graph, and I can add interactivity as I move forward.
+
+## One Last Thing...
+
+Hayleigh highlighted to me that I was missing a critical piece of the puzzle:
+
+```gleam
+pub fn main() {
+  let app = lustre.application(init:, update:, view:)
+
+  let assert Ok(_) = clique.register()
+  let assert Ok(_) = lustre.start(app, "#app", Nil)
+
+  Nil
+}
+```
+
+... Specifically, the `clique.register()` call. Turns out, this needs to run in the browser to register the custom Clique elements, like `Node` and `Handle` etc.
