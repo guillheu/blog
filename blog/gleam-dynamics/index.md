@@ -15,7 +15,7 @@ I also wrote [Themis](https://hexdocs.pm/themis/index.html), a Prometheus client
 
 But then, a few months later, `dynamic.from` was deprecated, then removed. I was upset! Now I had to do some Erlang FFI or something. Very angry face >:(
 
-`dynamic.from` was a function that would take in *any* argument and turn it into a `Dynamic`. How? WHO CARES! For a tuple (my use-case) the behavior was very predictable and it worked with ETS so I didn't care further.
+`dynamic.from` was a function that would take in *any* argument and turn it into a `Dynamic`. How? WHO CARES! For a variable-size tuple (my use-case) the behavior was very predictable and it worked with ETS so I didn't care further.
 
 In fact, I didn't really know what a `Dynamic` really was. I thought it was just a practical catch-all type when you're doing FFI.
 
