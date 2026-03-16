@@ -7,7 +7,7 @@ slug: gleam-decoding
 
 I've been *attempting* to write a Yaml parser in pure Gleam. Taking inspiration from the `gleam_json` module, I was seeing some `Dynamic`s being used during parsing, which confused me. Isn't a `Dynamic` just a generic catch-all type when doing FFI? Why would it be needed?
 
-After a while trying to make sense of it, I finally understood how to use the `stdlib`'s `dynamic` and `dynamic.decode` modules, how freaking cool they really are, and how I took a lot of their magic for granted.
+After a while trying to make sense of it, I finally understood how to use the `stdlib`'s `dynamic` and `dynamic/decode` modules, how freaking cool they really are, and how I took a lot of their magic for granted.
 
 ## The Before Times
 
