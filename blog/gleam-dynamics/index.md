@@ -95,4 +95,4 @@ Only looking at this closely made me realise that the `dynamic.from` served almo
 
 Now I understand why the Gleam core team deemed it necessary to remove this *noob trap* of a function, and force developpers to accurately describe their data structure when creating a `Dynamic` to then properly decode them.
 
-The only reason I could get away with using `dynamic.from` was that I just didn't need it. I wasn't decoding any data, so FFI was just the way to go.
+The only reason I could get away with using `dynamic.from` was that I just didn't need it. I wasn't decoding any data, so FFI was just the way to go in the end.
