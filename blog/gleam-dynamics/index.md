@@ -25,7 +25,7 @@ And... it is, but when handled with care, it becomes truly something beautiful.
 
 If `Dynamic` was only meant to be a catch-all type you wouldn't really need to make a module for it. First of all, a module dedicated to a catch-all type that would avoid Gleam's strong type system seemed very... counter-productive (if that's all it does). Second of all, it can trivially be replicated with 2 lines of FFI, __if all you care about is the catch-all type__.
 
-The *real* kicker is its sister module, `dynamic/decode`. This module makes it possible to decode `Dynamic`s into whatever the decoder spits out. It's not *just* a somehow generic representation of whatever you put in, it's a special type with its own internal structure (which depends on the runtime) that the `decode` module can decode into whatever the decoder is meant to create, including custom type variables.
+The *real* kicker is its sister module, `dynamic/decode`. This module makes it possible to decode `Dynamic`s into whatever the decoder spits out. `Dynamic` is not *just* a somehow generic representation of whatever you put in, it's a special type with its own internal structure (which depends on the runtime) that the `decode` module can decode into whatever the decoder is meant to create, including custom type variables.
 
 ## String to Json to Dynamic to your custom type
 
