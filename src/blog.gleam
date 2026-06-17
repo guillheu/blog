@@ -24,24 +24,24 @@ pub fn main() {
     |> config_post.path("./blog")
     |> config_post.route_prefix("articles")
     |> config_post.template(article_template)
-  // |> code.code(fn(lang, children) {
-  //   case lang {
-  //     Some("gleam") -> {
-  //       let code_text = case children {
-  //         [element] -> element.to_string(element)
-  //         _ ->
-  //           panic as "Code blocks should only have one element (what the heck!)"
-  //       }
-  //       let stylized_html =
-  //         contour.to_html(code_text)
-  //         |> string.replace("&amp;gt;", ">")
-  //         |> string.replace("&amp;lt;", "<")
-  //         |> string.replace("&amp;quot;", "\"")
-  //       element.unsafe_raw_html("", "code", [], stylized_html)
-  //     }
-  //     Some(_unknown_lang) | None -> html.code([], children)
-  //   }
-  // })
+    |> config_post.code(fn(_, lang, children) {
+      case lang {
+        Some("gleam") -> {
+          let code_text = case children {
+            [element] -> element.to_string(element)
+            _ ->
+              panic as "Code blocks should only have one element (what the heck!)"
+          }
+          let stylized_html =
+            contour.to_html(code_text)
+            |> string.replace("&amp;gt;", ">")
+            |> string.replace("&amp;lt;", "<")
+            |> string.replace("&amp;quot;", "\"")
+          element.unsafe_raw_html("", "code", [], stylized_html)
+        }
+        Some(_unknown_lang) | None -> html.code([], children)
+      }
+    })
 
   let cfg =
     config.new("https://blog.guillheu.dev")
