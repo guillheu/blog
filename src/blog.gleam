@@ -125,6 +125,22 @@ fn body_template(
         attribute.rel("stylesheet"),
         attribute.href(abs("/css/style.css")),
       ]),
+      html.html([], [
+        html.head([], [
+          html.script(
+            [
+              attribute.attribute("defer", ""),
+              attribute.attribute(
+                "data-project-id",
+                "019ed586-c97e-7bf3-84d4-514adc9f3292",
+              ),
+              attribute.src("https://sdk.feedback.one/v0/core.min.js"),
+            ],
+            "",
+          ),
+        ]),
+        html.body([], []),
+      ]),
     ]),
     html.body([attribute.class("mx-auto")], [
       html.header([], [
