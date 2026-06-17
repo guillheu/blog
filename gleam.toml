@@ -21,14 +21,3 @@ contour = ">= 1.2.1 and < 2.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
-
-[tools.lustre.html]
-body = """
-<script
-  src="https://sdk.feedback.one/v0/core.min.js"
-  data-project-id="019ed586-c97e-7bf3-84d4-514adc9f3292"
-  defer
-></script>
-<div id="app"></div>
-"""
-scripts = [{ src = "https://sdk.feedback.one/v0/core.min.js" , data-project-id = "019ed586-c97e-7bf3-84d4-514adc9f3292" , defer }]
