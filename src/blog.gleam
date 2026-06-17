@@ -193,7 +193,7 @@ fn body_template(
 
 fn article_template(
   current_post: Post(Nil),
-  other_posts: List(Post(Nil)),
+  _: List(Post(Nil)),
 ) -> Element(Nil) {
   let time_string =
     timestamp.to_rfc3339(current_post.date, duration.seconds(0))
