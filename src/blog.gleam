@@ -1,9 +1,11 @@
 import blogatto
 import blogatto/config
-import blogatto/config/markdown
+import blogatto/config/post as config_post
+import blogatto/error
 import blogatto/post.{type Post}
 import contour
 import gleam/int
+import gleam/io
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/string
@@ -17,38 +19,41 @@ import lustre/element/html
 const github_path_prefix = ""
 
 pub fn main() {
-  let md =
-    markdown.default()
-    |> markdown.markdown_path("./blog")
-    |> markdown.route_prefix("articles")
-    |> markdown.template(article_template)
-    |> markdown.code(fn(lang, children) {
-      case lang {
-        Some("gleam") -> {
-          let code_text = case children {
-            [element] -> element.to_string(element)
-            _ ->
-              panic as "Code blocks should only have one element (what the heck!)"
-          }
-          let stylized_html =
-            contour.to_html(code_text)
-            |> string.replace("&amp;gt;", ">")
-            |> string.replace("&amp;lt;", "<")
-            |> string.replace("&amp;quot;", "\"")
-          element.unsafe_raw_html("", "code", [], stylized_html)
-        }
-        Some(_unknown_lang) | None -> html.code([], children)
-      }
-    })
+  let post_config =
+    config_post.default()
+    |> config_post.path("./blog")
+    |> config_post.route_prefix("articles")
+    |> config_post.template(article_template)
+  // |> code.code(fn(lang, children) {
+  //   case lang {
+  //     Some("gleam") -> {
+  //       let code_text = case children {
+  //         [element] -> element.to_string(element)
+  //         _ ->
+  //           panic as "Code blocks should only have one element (what the heck!)"
+  //       }
+  //       let stylized_html =
+  //         contour.to_html(code_text)
+  //         |> string.replace("&amp;gt;", ">")
+  //         |> string.replace("&amp;lt;", "<")
+  //         |> string.replace("&amp;quot;", "\"")
+  //       element.unsafe_raw_html("", "code", [], stylized_html)
+  //     }
+  //     Some(_unknown_lang) | None -> html.code([], children)
+  //   }
+  // })
 
   let cfg =
     config.new("https://blog.guillheu.dev")
     |> config.output_dir("./dist")
     |> config.static_dir("./static")
-    |> config.markdown(md)
+    |> config.post(post_config)
     |> config.route("/", home_view)
 
-  let assert Ok(Nil) = blogatto.build(cfg)
+  case blogatto.build(cfg) {
+    Ok(Nil) -> io.println("Site built successfully!")
+    Error(err) -> io.println("Build failed: " <> error.describe_error(err))
+  }
 }
 
 fn home_view(posts: List(Post(Nil))) -> Element(Nil) {
@@ -186,9 +191,13 @@ fn body_template(
   ])
 }
 
-fn article_template(p: Post(Nil)) -> Element(Nil) {
+fn article_template(
+  current_post: Post(Nil),
+  other_posts: List(Post(Nil)),
+) -> Element(Nil) {
   let time_string =
-    timestamp.to_rfc3339(p.date, duration.seconds(0)) |> string.slice(11, 5)
+    timestamp.to_rfc3339(current_post.date, duration.seconds(0))
+    |> string.slice(11, 5)
   // -> "1970-01-01T00:16:40.123Z"
 
   let article =
@@ -198,18 +207,28 @@ fn article_template(p: Post(Nil)) -> Element(Nil) {
           attribute.class("mx-auto pt-6 pb-1 text-5xl font-bold"),
         ],
         [
-          element.text(p.title),
+          element.text(current_post.title),
         ],
       ),
       html.p([attribute.class("prose prose-lg mx-auto pb-6")], [
-        html.em([], [element.text(p.description)]),
+        html.em([], [element.text(current_post.description)]),
         html.br([]),
-        html.text(timestamp_to_string(p.date) <> " - " <> time_string),
+        html.text(
+          timestamp_to_string(current_post.date) <> " - " <> time_string,
+        ),
       ]),
-      html.div([attribute.class("prose text-left max-w-none")], p.contents),
+      html.div(
+        [attribute.class("prose text-left max-w-none")],
+        current_post.contents,
+      ),
     ])
 
-  body_template([article], p.title, p.description, p.language)
+  body_template(
+    [article],
+    current_post.title,
+    current_post.description,
+    current_post.language,
+  )
 }
 
 fn timestamp_to_string(ts: timestamp.Timestamp) -> String {

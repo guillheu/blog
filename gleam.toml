@@ -13,11 +13,14 @@ version = "1.0.0"
 # https://gleam.run/writing-gleam/gleam-toml/.
 
 [dependencies]
-gleam_stdlib = ">= 0.44.0 and < 2.0.0"
-blogatto = ">= 1.0.0 and < 2.0.0"
+gleam_stdlib = ">= 1.0.0 and < 2.0.0"
+blogatto = ">= 7.0.0 and < 8.0.0"
 lustre = ">= 5.6.0 and < 6.0.0"
 gleam_time = ">= 1.7.0 and < 2.0.0"
 contour = ">= 1.2.1 and < 2.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
+
+[tools.lustre.html]
+scripts = [{ src = "https://sdk.feedback.one/v0/core.min.js", data-project-id = "019ed586-c97e-7bf3-84d4-514adc9f3292", defer }]
