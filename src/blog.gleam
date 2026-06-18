@@ -289,7 +289,9 @@ fn feedback_arrows() -> List(Element(Nil)) {
         attribute.id("Capa_1"),
         attribute.attribute("version", "1.1"),
         attribute.attribute("fill", "#000000"),
-        attribute.class("fixed right-15 top-[47%] -translate-y-1/2"),
+        attribute.class(
+          "fixed right-15 top-[47%] -translate-y-1/2 hidden lg:block",
+        ),
       ],
       [
         svg.g([], [
@@ -323,7 +325,9 @@ fn feedback_arrows() -> List(Element(Nil)) {
         attribute.id("Capa_1"),
         attribute.attribute("version", "1.1"),
         attribute.attribute("fill", "#000000"),
-        attribute.class("fixed right-4 top-[57%] -translate-y-1/2"),
+        attribute.class(
+          "fixed right-4 top-[57%] -translate-y-1/2 hidden lg:block",
+        ),
       ],
       [
         svg.g([], [
@@ -363,7 +367,9 @@ fn feedback_arrows() -> List(Element(Nil)) {
         attribute.id("Capa_1"),
         attribute.attribute("version", "1.1"),
         attribute.attribute("fill", "#000000"),
-        attribute.class("fixed right-2 top-[43%] -translate-y-1/2"),
+        attribute.class(
+          "fixed right-2 top-[43%] -translate-y-1/2 hidden lg:block",
+        ),
       ],
       [
         svg.g([], [
