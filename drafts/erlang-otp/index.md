@@ -23,12 +23,15 @@ Tangeants:
             - Learn Lustre components
                 - Make a blog post about Lustre components
                     - Create a blog
-                    - Implement Gleam syntax highlighting in the blog
+                    - Implement Gleam syntax highlighting for the blog
             - Learn Clique
                 - Figure out how to beautifully position nodes with X-Y coordinates
                     - [Learn some Graph theory and representation methods on Youtube](https://youtu.be/aMx9l7dtPpQ?list=PLubYOWSl9mIuJXdt_pMYoTD8QkaX9kQgO)
-                    - Make a graph library in Gleam (Gaston)
-                        - Figure out how to internally represent a Graph in a way that makes sense for Gleam
-                        - Use snapshot testing ([Birdie](https://hexdocs.pm/birdie/))
-                            - Represent a graph as a string
-                                - Figure out how to center two stacked blocks of text horizontally & vertically
+                        - Implement a Sugiyama algorithm for graph layouts
+                    - ~~Make a graph library in Gleam (Gaston)~~
+                        - ~~Figure out how to internally represent a Graph in a way that makes sense for Gleam~~
+                        - ~~Use snapshot testing ([Birdie](https://hexdocs.pm/birdie/))~~
+                            - ~~Represent a graph as a string~~
+                                - ~~Figure out how to center two stacked blocks of text horizontally & vertically~~
+        - Learn about OTP supervision
+            - Discover BEAM Applications (trees)
